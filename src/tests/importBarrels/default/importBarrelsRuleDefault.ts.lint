@@ -1,8 +1,12 @@
 import relativeFromNonBarrel from './dir-with-barrel/some-module';
-                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [Use barrel (index) files for imports if they are available]
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [use-barrel]
+import relativeFromNonBarrelWithIndexName from './dir-with-barrel/some-module-index';
+                                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [use-barrel]
 import relativeFromBarrel from './dir-with-barrel';
 import relativeFromBarrelExplicit from './dir-with-barrel/index';
 import relativeFromDirWithoutBarrel from './dir-without-barrel/some-module';
 import relativeFromSameDirWithBarrel from './some-module';
 import relativeFromSameDirWithBarrelExplicit from './index';
 import absoluteFromLib from 'lib';
+
+[use-barrel]: Use barrel (index) files for imports if they are available

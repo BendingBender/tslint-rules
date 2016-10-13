@@ -77,6 +77,7 @@ class ImportBarrelsWalker extends Lint.RuleWalker {
 
     const modulePathText = (<StringLiteral>expression).text;
 
+    // check only relative paths
     if (!modulePathText.startsWith('.')) {
       return true;
     }
@@ -99,16 +100,8 @@ class ImportBarrelsWalker extends Lint.RuleWalker {
       return true;
     }
 
-    const moduleFileExtensions = this.getModuleFileExtensions();
-
-    let isExplicitBarrelImport = false;
-    if (moduleAbsolute.endsWith('index')) {
-      isExplicitBarrelImport = moduleFileExtensions
-        .map(ext => `${moduleAbsolute}.${ext}`)
-        .some(file => this.isFile(file));
-    }
-
-    if (isExplicitBarrelImport) {
+    // if module's name is 'index', it must be an explicit barrel import, dirs were excluded earlier
+    if (path.parse(moduleAbsolute).name === 'index') {
       return true;
     }
 

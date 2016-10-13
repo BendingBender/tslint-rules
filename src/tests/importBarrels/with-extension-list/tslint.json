@@ -1,0 +1,12 @@
+{
+  "rulesDirectory": [
+    "../../../../build"
+  ],
+  "rules": {
+    "import-barrels": [
+      true,
+      "txt"
+    ]
+  }
+}
+

@@ -1,6 +1,6 @@
 {
   "rulesDirectory": [
-    "../../../build"
+    "../../../../build"
   ],
   "rules": {
     "import-barrels": true
