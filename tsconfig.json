@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": false,
+    "experimentalDecorators": false,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "noEmitHelpers": false,
+    "strictNullChecks": false,
+    "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "baseUrl": "./src",
+    "outDir": "./build",
+    "paths": [
+    ],
+    "lib": [
+      "es6"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "compileOnSave": false,
+  "buildOnSave": false,
+  "atom": { "rewriteTsconfig": false }
+}

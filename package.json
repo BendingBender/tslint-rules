@@ -1,0 +1,36 @@
+{
+  "name": "custom-tslint-rules",
+  "version": "1.0.0",
+  "description": "Custom rules for tslint",
+  "main": "tslint.json",
+  "scripts": {
+    "clean": "rimraf build",
+    "build": "tsc -p tsconfig.json",
+    "lint": "tslint 'src/**/*.ts'",
+    "test": "JASMINE_CONFIG_PATH=./jasmine.json jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BendingBender/tslint-rules.git"
+  },
+  "keywords": [
+    "tslint",
+    "typescript"
+  ],
+  "author": "Dimitri Benin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BendingBender/tslint-rules/issues"
+  },
+  "homepage": "https://github.com/BendingBender/tslint-rules#readme",
+  "devDependencies": {
+    "@types/jasmine": "^2.5.35",
+    "@types/node": "^6.0.45",
+    "istanbul": "^0.4.5",
+    "jasmine": "^2.5.2",
+    "rimraf": "^2.5.4",
+    "tslint": "^3.15.1",
+    "tslint-microsoft-contrib": "^2.0.12",
+    "typescript": "^2.0.3"
+  }
+}
