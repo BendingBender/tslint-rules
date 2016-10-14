@@ -7,7 +7,7 @@ A set of custom [TSLint](https://github.com/palantir/tslint) rules.
 Available Rules
 -----
 
-- `import-barrels-rule`
+- `import-barrels`
 
   Enforce usage of barrels (`index.ts`) when importing from a directory that has a barrel file. This rule
   works only for ES2015 module syntax `import` statements and check only **relative** paths.
