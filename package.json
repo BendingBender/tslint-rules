@@ -4,6 +4,7 @@
   "description": "Custom rules for tslint",
   "main": "tslint.json",
   "scripts": {
+    "ci": "npm run lint && npm test",
     "clean": "rimraf build coverage",
     "precover": "npm run build:clean",
     "cover": "istanbul cover runTests.js -- --coverage && istanbul report",
