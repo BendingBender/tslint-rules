@@ -4,8 +4,9 @@
   "description": "Custom rules for tslint",
   "main": "tslint.json",
   "scripts": {
-    "ci": "npm run cover && npm run lint",
+    "ci": "npm run cover && npm run coveralls && npm run lint",
     "clean": "rimraf build coverage",
+    "coveralls": "cat coverage/lcov.info | coveralls",
     "precover": "npm run build:clean",
     "cover": "istanbul cover runTests.js -- --coverage && istanbul report",
     "build": "tsc -p tsconfig.json",
@@ -30,6 +31,7 @@
   "homepage": "https://github.com/BendingBender/tslint-rules#readme",
   "devDependencies": {
     "@types/node": "^6.0.45",
+    "coveralls": "^2.11.14",
     "glob": "^7.1.1",
     "istanbul": "^0.4.5",
     "rimraf": "^2.5.4",
