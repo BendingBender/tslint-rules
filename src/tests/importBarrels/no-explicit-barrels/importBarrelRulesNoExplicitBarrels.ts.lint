@@ -1,0 +1,6 @@
+import relativeFromBarrelExplicit from './dir-with-barrel/index';
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~  [no-explicit-barrels]
+import relativeFromBarrel from './dir-with-barrel';
+import relativeFromNonBarrelWithIndexLikeName from './dir-without-barrel/some-module-index';
+
+[no-explicit-barrels]: Don't import barrel files by name, import containing directory instead

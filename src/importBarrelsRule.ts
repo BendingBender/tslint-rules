@@ -4,7 +4,8 @@ import * as path from 'path';
 import * as fs from 'fs';
 
 export class Rule extends Lint.Rules.AbstractRule {
-  public static FAILURE_STRING = 'Use barrel (index) files for imports if they are available';
+  public static USE_BARREL_FAILURE_STRING = 'Use barrel (index) files for imports if they are available';
+  public static NO_EXPLICIT_BARRELS_FAILURE_STRING = "Don't import barrel files by name, import containing directory instead";
 
   public apply(sourceFile:SourceFile):Lint.RuleFailure[] {
     return this.applyWithWalker(new ImportBarrelsWalker(sourceFile, this.getOptions()));
@@ -16,16 +17,21 @@ class ImportBarrelsWalker extends Lint.RuleWalker {
 
   public visitImportDeclaration(node:ImportDeclaration) {
     const moduleExpression = node.moduleSpecifier;
+    const moduleExpressionError = this.moduleExpressionHasError(moduleExpression);
 
-    if (!this.isModuleExpressionValid(moduleExpression)) {
-      this.addFailure(this.createFailure(moduleExpression.getStart(), moduleExpression.getWidth(), Rule.FAILURE_STRING));
+    if (moduleExpressionError) {
+      this.addFailure(this.createFailure(moduleExpression.getStart(), moduleExpression.getWidth(), moduleExpressionError));
     }
 
     super.visitImportDeclaration(node);
   }
 
+  private getOptionsObject():{fileExtensions?:string[], noExplicitBarrels?:boolean} {
+    return this.getOptions()[0] || {};
+  }
+
   private getModuleFileExtensions():string[] {
-    let extensions = this.getOptions();
+    let extensions = this.getOptionsObject().fileExtensions || [];
 
     if (!extensions.length) {
       extensions = ['ts', 'js'];
@@ -33,6 +39,11 @@ class ImportBarrelsWalker extends Lint.RuleWalker {
     return extensions;
   }
 
+  private getExplicitBarrelsAllowed():boolean {
+    const {noExplicitBarrels = false} = this.getOptionsObject();
+
+    return !noExplicitBarrels;
+  }
 
   private statSync(path:string):fs.Stats {
     try {
@@ -70,16 +81,16 @@ class ImportBarrelsWalker extends Lint.RuleWalker {
     return stats != null && stats.isFile();
   }
 
-  private isModuleExpressionValid(expression:Expression):boolean {
+  private moduleExpressionHasError(expression:Expression):string {
     if (expression.kind !== SyntaxKind.StringLiteral) {
-      return true;
+      return null;
     }
 
     const modulePathText = (<StringLiteral>expression).text;
 
     // check only relative paths
     if (!modulePathText.startsWith('.')) {
-      return true;
+      return null;
     }
 
     const sourceFileRelative = this.getSourceFile().path;
@@ -90,23 +101,23 @@ class ImportBarrelsWalker extends Lint.RuleWalker {
     // enforce barrel usage only on files that are not in the same directory or in one of the sub-directories
     // of the module
     if (sourceFileDirAbsolute.startsWith(moduleDirAbsolute)) {
-      return true;
+      return null;
     }
 
     const moduleStats = this.getModuleStats(moduleAbsolute);
 
     // only file imports are of interest
     if (!moduleStats || moduleStats.isDirectory()) {
-      return true;
+      return null;
     }
 
     // if module's name is 'index', it must be an explicit barrel import, dirs were excluded earlier
     if (path.parse(moduleAbsolute).name === 'index') {
-      return true;
+      return this.getExplicitBarrelsAllowed() ? null : Rule.NO_EXPLICIT_BARRELS_FAILURE_STRING;
     }
 
-    return !this.getModuleFileExtensions()
+    return this.getModuleFileExtensions()
       .map(ext => path.join(moduleDirAbsolute, `index.${ext}`))
-      .some(file => this.isFile(file));
+      .some(file => this.isFile(file)) ? Rule.USE_BARREL_FAILURE_STRING : null;
   }
 }

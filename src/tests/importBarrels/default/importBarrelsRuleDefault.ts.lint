@@ -1,7 +1,7 @@
 import relativeFromNonBarrel from './dir-with-barrel/some-module';
                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [use-barrel]
-import relativeFromNonBarrelWithIndexName from './dir-with-barrel/some-module-index';
-                                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [use-barrel]
+import relativeFromNonBarrelWithIndexLikeName from './dir-with-barrel/some-module-index';
+                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [use-barrel]
 import relativeFromBarrel from './dir-with-barrel';
 import relativeFromBarrelExplicit from './dir-with-barrel/index';
 import relativeFromDirWithoutBarrel from './dir-without-barrel/some-module';

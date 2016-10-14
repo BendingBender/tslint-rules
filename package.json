@@ -4,10 +4,14 @@
   "description": "Custom rules for tslint",
   "main": "tslint.json",
   "scripts": {
-    "clean": "rimraf build",
+    "clean": "rimraf build coverage",
+    "precover": "npm run build:clean",
+    "cover": "istanbul cover runTests.js -- --coverage && istanbul report",
     "build": "tsc -p tsconfig.json",
+    "build:clean": "npm run clean && npm run build",
     "lint": "tslint 'src/**/*.ts'",
-    "test": "ts-node runTests.ts"
+    "pretest": "npm run build:clean",
+    "test": "node runTests.js"
   },
   "repository": {
     "type": "git",
@@ -24,13 +28,13 @@
   },
   "homepage": "https://github.com/BendingBender/tslint-rules#readme",
   "devDependencies": {
-    "@types/glob": "^5.0.30",
     "@types/node": "^6.0.45",
     "glob": "^7.1.1",
+    "istanbul": "^0.4.5",
     "rimraf": "^2.5.4",
-    "ts-node": "^1.4.3",
     "tslint": "^3.15.1",
     "tslint-microsoft-contrib": "^2.0.12",
-    "typescript": "^2.0.3"
+    "typescript": "^2.0.3",
+    "yargs": "^6.0.0"
   }
 }
