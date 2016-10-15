@@ -4,6 +4,44 @@ import * as path from 'path';
 import * as fs from 'fs';
 
 export class Rule extends Lint.Rules.AbstractRule {
+  public static metadata:Lint.IRuleMetadata = {
+    ruleName: 'import-barrels',
+    description: Lint.Utils.dedent`
+      Enforces usage of barrels (\`index.ts\`) when importing from a directory that has a barrel file.`,
+    rationale: Lint.Utils.dedent`
+      Allows directories that contain multiple modules to be handled as a single module with a single public interface
+      and opaque inner structure.
+      
+      This rule works only for ES2015 module syntax \`import\` statements and checks only **relative** module paths.`,
+    optionsDescription: Lint.Utils.dedent`
+      An argument object may be optionally provided, with the following properties:
+      
+      * \`noExplicitBarrels = false\`: disallows usage of explicitly named barrels in import statements (\`import foo from './foo/index'\`)
+      * \`fileExtensions = ['ts', 'js']\`: uses the provided file extensions for module and barrel file lookup`,
+    optionExamples: ['[true, {"noExplicitBarrels": false, "fileExtensions": ["ts", "js"]}]'],
+    options: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          noExplicitBarrels: {
+            type: 'boolean',
+          },
+          fileExtensions: {
+            type: 'array',
+            items: {
+              type: 'string',
+            },
+            minLength: 1,
+          },
+        },
+      },
+      minLength: 1,
+      maxLength: 1,
+    },
+    type: 'maintainability',
+  };
+
   public static USE_BARREL_FAILURE_STRING = 'Use barrel (index) files for imports if they are available';
   public static NO_EXPLICIT_BARRELS_FAILURE_STRING = "Don't import barrel files by name, import containing directory instead";
 

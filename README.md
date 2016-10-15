@@ -4,15 +4,20 @@
 
 A set of custom [TSLint](https://github.com/palantir/tslint) rules.
 
-Available Rules
------
+## Available Rules
 
-- `import-barrels`
+* `import-barrels`
 
-  Enforce usage of barrels (`index.ts`) when importing from a directory that has a barrel file. This rule
-  works only for ES2015 module syntax `import` statements and check only **relative** paths.
+  Enforces usage of barrels (`index.ts`) when importing from a directory that has a barrel file.
   
-  Usage:
+  #### Rationale:
+  
+  Allows directories that contain multiple modules to be handled as a single module with a single public interface
+  and opaque inner structure.
+        
+  This rule works only for ES2015 module syntax `import` statements and checks only **relative** module paths.
+  
+  #### Usage:
   ```json
   "import-barrels": [
     true,
@@ -20,10 +25,12 @@ Available Rules
   ]
   ```
 
-  Options:
+  #### Options:
   
-  - `noExplicitBarrels = false`: disallow usage of explicitly named barrels in import statements (`import foo from './foo/index'`)
-  - `fileExtensions = ['ts', 'js']`: use the provided file extensions for module file resolution
+  An argument object may be optionally provided, with the following properties:
+  
+  * `noExplicitBarrels = false`: disallows usage of explicitly named barrels in import statements (`import foo from './foo/index'`)
+  * `fileExtensions = ['ts', 'js']`: uses the provided file extensions for module and barrel file lookup
   
 
 [build-image]: https://img.shields.io/travis/BendingBender/tslint-rules/master.svg?style=flat-square
