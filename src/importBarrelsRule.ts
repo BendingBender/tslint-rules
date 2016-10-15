@@ -42,8 +42,8 @@ export class Rule extends Lint.Rules.AbstractRule {
     type: 'maintainability',
   };
 
-  public static USE_BARREL_FAILURE_STRING = 'Use barrel (index) files for imports if they are available';
-  public static NO_EXPLICIT_BARRELS_FAILURE_STRING = "Don't import barrel files by name, import containing directory instead";
+  public static USE_BARREL_FAILURE_STRING = 'Use barrel (index) files for imports if they are available for path: ';
+  public static NO_EXPLICIT_BARRELS_FAILURE_STRING = "Don't import barrel files by name, import containing directory instead for path: ";
 
   public apply(sourceFile:SourceFile):Lint.RuleFailure[] {
     return this.applyWithWalker(new ImportBarrelsWalker(sourceFile, this.getOptions()));
@@ -55,7 +55,7 @@ class ImportBarrelsWalker extends Lint.RuleWalker {
 
   protected visitImportDeclaration(node:ImportDeclaration) {
     const moduleExpression = node.moduleSpecifier;
-    const moduleExpressionError = this.moduleExpressionHasError(moduleExpression);
+    const moduleExpressionError = this.getModuleExpressionErrorMessage(moduleExpression);
 
     if (moduleExpressionError) {
       this.addFailure(this.createFailure(moduleExpression.getStart(), moduleExpression.getWidth(), moduleExpressionError));
@@ -64,7 +64,7 @@ class ImportBarrelsWalker extends Lint.RuleWalker {
     super.visitImportDeclaration(node);
   }
 
-  private moduleExpressionHasError(expression:Expression):string {
+  private getModuleExpressionErrorMessage(expression:Expression):string {
     if (expression.kind !== SyntaxKind.StringLiteral) {
       return null;
     }
@@ -96,12 +96,12 @@ class ImportBarrelsWalker extends Lint.RuleWalker {
 
     // if module's name is 'index', it must be an explicit barrel import, dirs were excluded earlier
     if (path.parse(moduleAbsolute).name === 'index') {
-      return this.getExplicitBarrelsAllowed() ? null : Rule.NO_EXPLICIT_BARRELS_FAILURE_STRING;
+      return this.getExplicitBarrelsAllowed() ? null : Rule.NO_EXPLICIT_BARRELS_FAILURE_STRING + expression.getText();
     }
 
     return this.getModuleFileExtensions()
       .map(ext => path.join(moduleDirAbsolute, `index.${ext}`))
-      .some(file => this.isFile(file)) ? Rule.USE_BARREL_FAILURE_STRING : null;
+      .some(file => this.isFile(file)) ? Rule.USE_BARREL_FAILURE_STRING + expression.getText() : null;
   }
 
   private getModuleStats(modulePath:string):fs.Stats {
