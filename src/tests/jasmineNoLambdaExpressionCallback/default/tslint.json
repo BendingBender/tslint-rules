@@ -1,0 +1,8 @@
+{
+  "rulesDirectory": [
+    "../../../../build"
+  ],
+  "rules": {
+    "jasmine-no-lambda-expression-callbacks": true
+  }
+}

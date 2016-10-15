@@ -51,9 +51,9 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class ImportBarrelsWalker extends Lint.RuleWalker {
-  private statCache = new Map();
+  private statCache = new Map<string, fs.Stats>();
 
-  public visitImportDeclaration(node:ImportDeclaration) {
+  protected visitImportDeclaration(node:ImportDeclaration) {
     const moduleExpression = node.moduleSpecifier;
     const moduleExpressionError = this.moduleExpressionHasError(moduleExpression);
 
@@ -62,61 +62,6 @@ class ImportBarrelsWalker extends Lint.RuleWalker {
     }
 
     super.visitImportDeclaration(node);
-  }
-
-  private getOptionsObject():{fileExtensions?:string[], noExplicitBarrels?:boolean} {
-    return this.getOptions()[0] || {};
-  }
-
-  private getModuleFileExtensions():string[] {
-    let extensions = this.getOptionsObject().fileExtensions || [];
-
-    if (!extensions.length) {
-      extensions = ['ts', 'js'];
-    }
-    return extensions;
-  }
-
-  private getExplicitBarrelsAllowed():boolean {
-    const {noExplicitBarrels = false} = this.getOptionsObject();
-
-    return !noExplicitBarrels;
-  }
-
-  private statSync(path:string):fs.Stats {
-    try {
-      return fs.statSync(path);
-    } catch (e) {
-      return null;
-    }
-  }
-
-  private cachedStatSync(path:string):fs.Stats {
-    if (this.statCache.has(path)) {
-      return this.statCache.get(path);
-    }
-
-    const stat = this.statSync(path);
-    this.statCache.set(path, stat);
-    return stat;
-  }
-
-  private getModuleStats(modulePath:string):fs.Stats {
-    let stats = this.cachedStatSync(modulePath);
-
-    if (!stats) {
-      this.getModuleFileExtensions().some(suffix => {
-        stats = this.cachedStatSync(`${modulePath}.${suffix}`);
-        return stats !== null;
-      });
-    }
-
-    return stats;
-  }
-
-  private isFile(path:string):boolean {
-    const stats = this.cachedStatSync(path);
-    return stats != null && stats.isFile();
   }
 
   private moduleExpressionHasError(expression:Expression):string {
@@ -157,5 +102,60 @@ class ImportBarrelsWalker extends Lint.RuleWalker {
     return this.getModuleFileExtensions()
       .map(ext => path.join(moduleDirAbsolute, `index.${ext}`))
       .some(file => this.isFile(file)) ? Rule.USE_BARREL_FAILURE_STRING : null;
+  }
+
+  private getModuleStats(modulePath:string):fs.Stats {
+    let stats = this.cachedStatSync(modulePath);
+
+    if (!stats) {
+      this.getModuleFileExtensions().some(suffix => {
+        stats = this.cachedStatSync(`${modulePath}.${suffix}`);
+        return stats !== null;
+      });
+    }
+
+    return stats;
+  }
+
+  private getModuleFileExtensions():string[] {
+    let extensions = this.getOptionsObject().fileExtensions || [];
+
+    if (!extensions.length) {
+      extensions = ['ts', 'js'];
+    }
+    return extensions;
+  }
+
+  private getExplicitBarrelsAllowed():boolean {
+    const {noExplicitBarrels = false} = this.getOptionsObject();
+
+    return !noExplicitBarrels;
+  }
+
+  private getOptionsObject():{fileExtensions?:string[], noExplicitBarrels?:boolean} {
+    return this.getOptions()[0] || {};
+  }
+
+  private isFile(path:string):boolean {
+    const stats = this.cachedStatSync(path);
+    return stats != null && stats.isFile();
+  }
+
+  private cachedStatSync(path:string):fs.Stats {
+    if (this.statCache.has(path)) {
+      return this.statCache.get(path);
+    }
+
+    const stat = this.statSync(path);
+    this.statCache.set(path, stat);
+    return stat;
+  }
+
+  private statSync(path:string):fs.Stats {
+    try {
+      return fs.statSync(path);
+    } catch (e) {
+      return null;
+    }
   }
 }

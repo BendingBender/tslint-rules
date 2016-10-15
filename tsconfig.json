@@ -13,8 +13,7 @@
     "suppressImplicitAnyIndexErrors": true,
     "baseUrl": "./src",
     "outDir": "./build",
-    "paths": [
-    ],
+    "paths": {},
     "lib": [
       "es6"
     ]

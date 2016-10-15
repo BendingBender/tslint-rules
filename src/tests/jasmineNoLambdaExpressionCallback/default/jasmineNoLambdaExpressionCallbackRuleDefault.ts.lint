@@ -1,0 +1,80 @@
+describe("this", () => {
+                 ~~~~~~~
+  it("is an error", function() {
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  });
+~~~~~
+});
+~ [no-lambda-callback]
+
+fdescribe("this, too", () => {
+                       ~~~~~~~
+});
+~ [no-lambda-callback]
+
+xdescribe("this, too", () => {
+                       ~~~~~~~
+});
+~ [no-lambda-callback]
+
+describe("this, too", function() {
+  it("is an error", () => {
+                    ~~~~~~~
+  });
+~~~ [no-lambda-callback]
+
+  fit("is an error", () => {
+                     ~~~~~~~
+  });
+~~~ [no-lambda-callback]
+
+  xit("is an error", () => {
+                     ~~~~~~~
+  });
+~~~ [no-lambda-callback]
+
+  beforeEach(() => {
+             ~~~~~~~
+  });
+~~~ [no-lambda-callback]
+
+  beforeAll(() => {
+            ~~~~~~~
+  });
+~~~ [no-lambda-callback]
+
+  afterEach(() => {
+            ~~~~~~~
+  });
+~~~ [no-lambda-callback]
+
+  afterAll(() => {
+           ~~~~~~~
+  });
+~~~ [no-lambda-callback]
+});
+
+someOtherCallWithLambda(() => {})
+
+fdescribe("this, too", wrapCallback(() => {
+                                    ~~~~~~~
+}));
+~ [no-lambda-callback]
+
+describe("this, too", wrapCallback(function() {
+  it("hi", wrapAgain(() => {
+                     ~~~~~~~
+  }));
+~~~ [no-lambda-callback]
+
+  afterEach(yetAnotherWrap(() => {
+                           ~~~~~~~
+  }));
+~~~ [no-lambda-callback]
+}));
+
+(() => {})();
+
+
+
+[no-lambda-callback]: Don't use lambda expressions as callbacks to jasmine functions

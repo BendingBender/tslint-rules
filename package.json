@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/BendingBender/tslint-rules#readme",
   "devDependencies": {
+    "@types/lodash": "^4.14.37",
     "@types/node": "^6.0.45",
     "coveralls": "^2.11.14",
     "glob": "^7.1.1",
@@ -39,5 +40,8 @@
     "tslint-microsoft-contrib": "^2.0.12",
     "typescript": "^2.0.3",
     "yargs": "^6.0.0"
+  },
+  "dependencies": {
+    "lodash": "^4.16.4"
   }
 }
