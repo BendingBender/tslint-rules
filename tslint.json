@@ -1,0 +1,6 @@
+{
+  "rules": {
+    "import-barrels": true,
+    "jasmine-no-lambda-expression-callbacks": true
+  }
+}
