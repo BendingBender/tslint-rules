@@ -4,16 +4,18 @@
   "description": "Custom rules for tslint",
   "main": "tslint.json",
   "scripts": {
+    "build": "tsc -p tsconfig.json --outDir ./dist",
+    "build:clean": "npm run clean && npm run build",
     "ci": "npm run cover && npm run coveralls && npm run lint",
-    "clean": "rimraf build coverage",
+    "clean": "rimraf dist coverage",
     "coveralls": "cat coverage/lcov.info | coveralls",
     "precover": "npm run build:clean",
-    "cover": "istanbul cover runTests.js -- --coverage && istanbul report",
-    "build": "tsc -p tsconfig.json",
-    "build:clean": "npm run clean && npm run build",
+    "cover": "istanbul cover --root ./dist --dir ./coverage runTests.js -- -b ./dist -c ./coverage && istanbul report --dir ./coverage",
+    "dist": "npm run clean && npm test && npm run lint && rimraf dist/tests",
     "lint": "tslint 'src/**/*.ts'",
-    "pretest": "npm run build:clean",
-    "test": "node runTests.js"
+    "prepublish": "npm run dist",
+    "pretest": "npm run build",
+    "test": "node runTests.js -b ./dist"
   },
   "repository": {
     "type": "git",
@@ -43,5 +45,8 @@
   },
   "dependencies": {
     "lodash": "^4.16.4"
+  },
+  "engines": {
+    "node": ">=4"
   }
 }

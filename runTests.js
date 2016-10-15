@@ -1,14 +1,26 @@
 'use strict';
 
+const argv = require('yargs')
+  .usage('Usage: $0 --buildDir [path] --coverage [path]')
+  .alias({
+    'b': 'buildDir',
+    'c': 'coverage'
+  })
+  .nargs({
+    'b': 1,
+    'c': 1
+  })
+  .demand(['b'])
+  .argv;
+
 const glob = require('glob');
 const path = require('path');
 const child_process = require('child_process');
-const argv = require('yargs').argv;
 
 const tslintCommand = path.resolve('./node_modules/.bin/tslint');
 const istanbulCommand = path.resolve('./node_modules/.bin/istanbul');
-const buildDir = path.resolve('./build');
-const coverageDir = path.resolve('./coverage');
+const buildDir = path.resolve(argv.buildDir);
+const coverageDir = path.resolve(argv.coverage || '');
 
 glob('src/tests/**/*.ts.lint', (error, files) => {
   if (error) {

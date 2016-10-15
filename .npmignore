@@ -1,0 +1,8 @@
+.idea/
+src/
+.travis.yml
+.npmignore
+.istanbul.yml
+.editorconfig
+runTests.js
+tsconfig.json

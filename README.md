@@ -1,12 +1,40 @@
 [![Build Status][build-image]][build-url] [![Coverage Status][coverage-image]][coverage-url] [![dependencies][deps-image]][deps-url] [![dev-dependencies][dev-deps-image]][dev-deps-url]
 
+[![NPM][npm-image]][npm-url]
+
 # tslint-rules
 
 A set of custom [TSLint](https://github.com/palantir/tslint) rules.
 
-## Available Rules
 
-### `import-barrels`
+# Usage
+
+Install from npm to your devDependencies:
+```
+npm install --save-dev custom-tslint-rules
+```
+
+Configure tslint to use the custom-tslint-rules folder:
+
+Add the following path to the `rulesDirectory` setting in your `tslint.json` file:
+
+```json
+{
+   "rulesDirectory": [
+     "node_modules/custom-tslint-rules/dist"
+   ],
+   "rules": {
+     ...
+   }
+}
+```
+
+Now configure some of the new rules.
+
+
+# Available Rules
+
+## `import-barrels`
 
 Enforces usage of barrels (`index.ts`) when importing from a directory that has a barrel file.
 
@@ -33,7 +61,7 @@ An argument object may be optionally provided, with the following properties:
 * `fileExtensions = ['ts', 'js']`: uses the provided file extensions for module and barrel file lookup
 
 
-### `jasmine-no-lambda-expression-callbacks`
+## `jasmine-no-lambda-expression-callbacks`
 
 Disallows usage of ES6-style lambda expressions as callbacks to Jasmine BDD functions.  
 
@@ -75,3 +103,5 @@ Not configurable.
 [deps-url]: https://david-dm.org/BendingBender/tslint-rules
 [dev-deps-image]: https://img.shields.io/david/dev/BendingBender/tslint-rules.svg?style=flat-square
 [dev-deps-url]: https://david-dm.org/BendingBender/tslint-rules?type=dev
+[npm-image]: https://nodei.co/npm/custom-tslint-rules.png
+[npm-url]: https://npmjs.org/package/custom-tslint-rules

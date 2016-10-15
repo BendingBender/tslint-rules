@@ -1,6 +1,5 @@
 verbose: false
 instrumentation:
-    root: ./build
     extensions:
         - .js
     default-excludes: true
@@ -10,4 +9,3 @@ reporting:
     print: summary
     reports:
         - lcov
-    dir: ./coverage
