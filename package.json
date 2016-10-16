@@ -31,6 +31,9 @@
     "url": "https://github.com/BendingBender/tslint-rules/issues"
   },
   "homepage": "https://github.com/BendingBender/tslint-rules#readme",
+  "dependencies": {
+    "lodash": "^4.16.4"
+  },
   "devDependencies": {
     "@types/lodash": "^4.14.37",
     "@types/node": "^6.0.45",
@@ -42,9 +45,6 @@
     "tslint-microsoft-contrib": "^2.0.12",
     "typescript": "^2.0.3",
     "yargs": "^6.0.0"
-  },
-  "dependencies": {
-    "lodash": "^4.16.4"
   },
   "engines": {
     "node": ">=4"

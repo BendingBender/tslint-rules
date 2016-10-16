@@ -87,13 +87,20 @@ it('something', inject([Service], (service) => {
 
 #### Usage:
 ```json
-"jasmine-no-lambda-expression-callbacks": [true]
+"jasmine-no-lambda-expression-callbacks": true
 ```
 
 #### Options:
 
 Not configurable.
-  
+
+# Contributions and Development
+
+Issue reports and pull requests are highly welcome! Please make sure to provide sensible tests along with your pull request.
+
+To get started with development, clone the project and run `npm install`.
+To run the tests execute `npm test`. `npm run cover` will run the tests along with generating a coverage report.
+
 
 [build-image]: https://img.shields.io/travis/BendingBender/tslint-rules/master.svg?style=flat-square
 [build-url]: https://travis-ci.org/BendingBender/tslint-rules
@@ -103,5 +110,5 @@ Not configurable.
 [deps-url]: https://david-dm.org/BendingBender/tslint-rules
 [dev-deps-image]: https://img.shields.io/david/dev/BendingBender/tslint-rules.svg?style=flat-square
 [dev-deps-url]: https://david-dm.org/BendingBender/tslint-rules?type=dev
-[npm-image]: https://nodei.co/npm/custom-tslint-rules.png
+[npm-image]: https://nodei.co/npm/custom-tslint-rules.png?downloads=true
 [npm-url]: https://npmjs.org/package/custom-tslint-rules
