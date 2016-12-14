@@ -1,6 +1,6 @@
 {
   "name": "custom-tslint-rules",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Custom rules for tslint",
   "main": "tslint.json",
   "scripts": {
