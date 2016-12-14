@@ -1,21 +1,29 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": false,
+    "alwaysStrict": false,
+    "baseUrl": "./src",
+    "importHelpers": true,
     "emitDecoratorMetadata": false,
     "experimentalDecorators": false,
-    "allowSyntheticDefaultImports": true,
-    "sourceMap": true,
-    "noEmitHelpers": false,
-    "strictNullChecks": false,
-    "noImplicitAny": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "baseUrl": "./src",
-    "paths": {},
     "lib": [
       "es6"
-    ]
+    ],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmitHelpers": false,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "paths": {},
+    "pretty": true,
+    "skipLibCheck": false,
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "target": "es5"
   },
   "exclude": [
     "node_modules",
@@ -23,5 +31,7 @@
   ],
   "compileOnSave": false,
   "buildOnSave": false,
-  "atom": { "rewriteTsconfig": false }
+  "atom": {
+    "rewriteTsconfig": false
+  }
 }

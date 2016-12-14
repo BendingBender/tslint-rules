@@ -1,19 +1,19 @@
-import { SourceFile, ImportDeclaration, Expression, SyntaxKind, StringLiteral } from 'typescript';
-import * as Lint from 'tslint/lib/lint';
-import * as path from 'path';
 import * as fs from 'fs';
+import * as path from 'path';
+import { IRuleMetadata, RuleFailure, Rules, RuleWalker, Utils } from 'tslint/lib';
+import { Expression, ImportDeclaration, SourceFile, StringLiteral, SyntaxKind } from 'typescript';
 
-export class Rule extends Lint.Rules.AbstractRule {
-  public static metadata:Lint.IRuleMetadata = {
+export class Rule extends Rules.AbstractRule {
+  public static metadata:IRuleMetadata = {
     ruleName: 'import-barrels',
-    description: Lint.Utils.dedent`
+    description: Utils.dedent`
       Enforces usage of barrels (\`index.ts\`) when importing from a directory that has a barrel file.`,
-    rationale: Lint.Utils.dedent`
+    rationale: Utils.dedent`
       Allows directories that contain multiple modules to be handled as a single module with a single public interface
       and opaque inner structure.
       
       This rule works only for ES2015 module syntax \`import\` statements and checks only **relative** module paths.`,
-    optionsDescription: Lint.Utils.dedent`
+    optionsDescription: Utils.dedent`
       An argument object may be optionally provided, with the following properties:
       
       * \`noExplicitBarrels = false\`: disallows usage of explicitly named barrels in import statements (\`import foo from './foo/index'\`)
@@ -40,17 +40,18 @@ export class Rule extends Lint.Rules.AbstractRule {
       maxLength: 1,
     },
     type: 'maintainability',
+    typescriptOnly: false,
   };
 
   public static USE_BARREL_FAILURE_STRING = 'Use barrel (index) files for imports if they are available for path: ';
   public static NO_EXPLICIT_BARRELS_FAILURE_STRING = "Don't import barrel files by name, import containing directory instead for path: ";
 
-  public apply(sourceFile:SourceFile):Lint.RuleFailure[] {
+  public apply(sourceFile:SourceFile):RuleFailure[] {
     return this.applyWithWalker(new ImportBarrelsWalker(sourceFile, this.getOptions()));
   }
 }
 
-class ImportBarrelsWalker extends Lint.RuleWalker {
+class ImportBarrelsWalker extends RuleWalker {
   private statCache = new Map<string, fs.Stats>();
 
   protected visitImportDeclaration(node:ImportDeclaration) {
@@ -64,7 +65,7 @@ class ImportBarrelsWalker extends Lint.RuleWalker {
     super.visitImportDeclaration(node);
   }
 
-  private getModuleExpressionErrorMessage(expression:Expression):string {
+  private getModuleExpressionErrorMessage(expression:Expression):string|null {
     if (expression.kind !== SyntaxKind.StringLiteral) {
       return null;
     }
@@ -104,7 +105,7 @@ class ImportBarrelsWalker extends Lint.RuleWalker {
       .some(file => this.isFile(file)) ? Rule.USE_BARREL_FAILURE_STRING + expression.getText() : null;
   }
 
-  private getModuleStats(modulePath:string):fs.Stats {
+  private getModuleStats(modulePath:string):fs.Stats|null {
     let stats = this.cachedStatSync(modulePath);
 
     if (!stats) {
@@ -141,17 +142,19 @@ class ImportBarrelsWalker extends Lint.RuleWalker {
     return stats != null && stats.isFile();
   }
 
-  private cachedStatSync(path:string):fs.Stats {
+  private cachedStatSync(path:string):fs.Stats|null {
     if (this.statCache.has(path)) {
-      return this.statCache.get(path);
+      return <fs.Stats>this.statCache.get(path);
     }
 
     const stat = this.statSync(path);
-    this.statCache.set(path, stat);
+    if (stat !== null) {
+      this.statCache.set(path, stat);
+    }
     return stat;
   }
 
-  private statSync(path:string):fs.Stats {
+  private statSync(path:string):fs.Stats|null {
     try {
       return fs.statSync(path);
     } catch (e) {

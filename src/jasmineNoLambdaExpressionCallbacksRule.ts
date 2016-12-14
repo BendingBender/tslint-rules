@@ -1,14 +1,14 @@
-import { SourceFile, CallExpression, SyntaxKind, Identifier, ArrowFunction, Expression } from 'typescript';
-import * as Lint from 'tslint/lib/lint';
-import * as includes from 'lodash/includes';
-import * as find from 'lodash/find';
+import { IRuleMetadata, RuleFailure, Rules, RuleWalker, Utils } from 'tslint/lib';
+import { ArrowFunction, CallExpression, Expression, Identifier, SourceFile, SyntaxKind } from 'typescript';
+import includes = require('lodash/includes');
+import find = require('lodash/find');
 
-export class Rule extends Lint.Rules.AbstractRule {
-  public static metadata:Lint.IRuleMetadata = {
+export class Rule extends Rules.AbstractRule {
+  public static metadata:IRuleMetadata = {
     ruleName: 'jasmine-no-lambda-expression-callbacks',
-    description: Lint.Utils.dedent`
+    description: Utils.dedent`
       Disallows usage of ES6-style lambda expressions as callbacks to Jasmine BDD functions.`,
-    rationale: Lint.Utils.dedent`
+    rationale: Utils.dedent`
       Lambda expressions don't create lexical \`this\` bindings in order for \`this\` bindings from outer function scopes to be
       visible inside of lambda expressions. This beats Jasmine's own system of managing shared state by passing in a dictionary object
       as \`this\` reference to the user-provided callbacks to take over the memory management from the JavaScript VM to prevent memory
@@ -29,6 +29,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     optionExamples: ['true'],
     options: null,
     type: 'maintainability',
+    typescriptOnly: false,
   };
 
   public static FAILURE_STRING = "Don't use lambda expressions as callbacks to jasmine functions";
@@ -47,12 +48,12 @@ export class Rule extends Lint.Rules.AbstractRule {
     'afterAll',
   ];
 
-  public apply(sourceFile:SourceFile):Lint.RuleFailure[] {
+  public apply(sourceFile:SourceFile):RuleFailure[] {
     return this.applyWithWalker(new JasmineNoLambdaExpressionCallbacksWalker(sourceFile, this.getOptions()));
   }
 }
 
-class JasmineNoLambdaExpressionCallbacksWalker extends Lint.RuleWalker {
+class JasmineNoLambdaExpressionCallbacksWalker extends RuleWalker {
   protected visitCallExpression(node:CallExpression) {
     const invalidLambdaExpression = this.getInvalidLambdaExpression(node);
 
@@ -63,7 +64,7 @@ class JasmineNoLambdaExpressionCallbacksWalker extends Lint.RuleWalker {
     super.visitCallExpression(node);
   }
 
-  private getInvalidLambdaExpression(node:CallExpression):ArrowFunction {
+  private getInvalidLambdaExpression(node:CallExpression):ArrowFunction|null {
     if (node.expression.kind !== SyntaxKind.Identifier) {
       return null;
     }
@@ -80,7 +81,7 @@ class JasmineNoLambdaExpressionCallbacksWalker extends Lint.RuleWalker {
     return null;
   }
 
-  private getLambdaExpressionFromArg(apiArg:Expression):ArrowFunction {
+  private getLambdaExpressionFromArg(apiArg:Expression):ArrowFunction|null {
     if (apiArg.kind === SyntaxKind.ArrowFunction) {
       return <ArrowFunction>apiArg;
     } else if (apiArg.kind === SyntaxKind.CallExpression) {

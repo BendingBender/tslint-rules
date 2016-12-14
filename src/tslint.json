@@ -14,10 +14,11 @@
     "no-any": false,
     "no-inferrable-types": true,
     "no-internal-module": true,
-    "no-namespace": false,
+    "no-namespace": true,
     "no-reference": true,
     "no-var-requires": true,
     "only-arrow-functions": false,
+    "prefer-for-of": true,
     "typedef": false,
     "typedef-whitespace": [
       true,
@@ -40,7 +41,6 @@
     "curly": true,
     "forin": true,
     "label-position": true,
-    "label-undefined": true,
     "no-arg": true,
     "no-bitwise": true,
     "no-conditional-assignment": true,
@@ -54,20 +54,22 @@
     ],
     "no-construct": true,
     "no-debugger": true,
-    "no-duplicate-key": true,
     "no-duplicate-variable": true,
     "no-empty": true,
     "no-eval": true,
+    // no-for-in-array requires type info
     "no-for-in-array": false,
+    "no-invalid-this": [
+      true,
+      "check-function-in-method"
+    ],
     "no-null-keyword": false,
-    "no-shadowed-variable": true,
+    "no-shadowed-variable": false,
     "no-string-literal": false,
     "no-switch-case-fall-through": true,
-    "no-unreachable": true,
     "no-unsafe-finally": true,
     "no-unused-expression": true,
     "no-unused-new": true,
-    "no-unused-variable": true,
     "no-use-before-declare": true,
     "no-var-keyword": true,
     "radix": true,
@@ -78,9 +80,9 @@
       "allow-null-check"
     ],
     "use-isnan": true,
-    "use-strict": [
+    "cyclomatic-complexity": [
       true,
-      "check-module"
+      20
     ],
     "eofline": true,
     "indent": [
@@ -104,20 +106,19 @@
     "no-require-imports": false,
     "no-trailing-whitespace": true,
     "object-literal-sort-keys": false,
-    "trailing-comma": [
-      true,
-      {
-        "multiline": "always",
-        "singleline": "never"
-      }
-    ],
+    "trailing-comma": true,
     "align": false,
+    "array-type": [
+      true,
+      "array"
+    ],
     "arrow-parens": false,
     "class-name": true,
     "comment-format": [
       true,
       "check-space"
     ],
+    "completed-docs": false,
     "file-header": false,
     "interface-name": [
       true,
@@ -127,7 +128,7 @@
     "new-parens": true,
     "no-angle-bracket-type-assertion": false,
     "no-consecutive-blank-lines": false,
-    "no-constructor-vars": false,
+    "no-parameter-properties": false,
     "object-literal-key-quotes": [
       true,
       "as-needed"
@@ -142,7 +143,13 @@
       "check-whitespace"
     ],
     "one-variable-per-declaration": false,
-    "ordered-imports": false,
+    "ordered-imports": [
+      true,
+      {
+        "import-sources-order": "case-insensitive",
+        "named-imports-order": "case-insensitive"
+      }
+    ],
     "quotemark": [
       true,
       "single",
@@ -166,6 +173,7 @@
       "check-separator",
       "check-module"
     ],
+    // tslint-microsoft-contrib
     "chai-prefer-contains-to-index-of": false,
     "chai-vague-errors": false,
     "export-name": false,
