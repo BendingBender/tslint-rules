@@ -3,7 +3,7 @@
     "allowSyntheticDefaultImports": false,
     "alwaysStrict": false,
     "baseUrl": "./src",
-    "importHelpers": true,
+    "importHelpers": false,
     "emitDecoratorMetadata": false,
     "experimentalDecorators": false,
     "lib": [

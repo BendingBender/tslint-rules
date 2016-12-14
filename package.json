@@ -33,8 +33,7 @@
   },
   "homepage": "https://github.com/BendingBender/tslint-rules#readme",
   "dependencies": {
-    "lodash": "^4.16.4",
-    "tslib": "^1.2.0"
+    "lodash": "^4.16.4"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.37",
