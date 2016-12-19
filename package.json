@@ -47,6 +47,9 @@
     "typescript": "~2.1.4",
     "yargs": "^6.0.0"
   },
+  "peerDependencies": {
+    "tslint": "^4.0.0"
+  },
   "engines": {
     "node": ">=4"
   }
