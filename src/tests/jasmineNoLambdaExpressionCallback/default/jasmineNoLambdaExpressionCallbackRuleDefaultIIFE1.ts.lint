@@ -1,0 +1,6 @@
+(function test() {
+  describe('some test in an IIFE', () => {});
+                                   ~~~~~~~~ [no-lambda-callback]
+})();
+
+[no-lambda-callback]: Don't use lambda expressions as callbacks to jasmine functions

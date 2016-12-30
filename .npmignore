@@ -6,3 +6,4 @@ src/
 .editorconfig
 runTests.js
 tsconfig.json
+yarn.lock

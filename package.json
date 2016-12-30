@@ -33,16 +33,16 @@
   },
   "homepage": "https://github.com/BendingBender/tslint-rules#readme",
   "dependencies": {
-    "lodash": "^4.16.4"
+    "lodash": "^4.17.3"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.37",
-    "@types/node": "^6.0.45",
+    "@types/lodash": "^4.14.45",
+    "@types/node": "^6.0.55",
     "coveralls": "^2.11.14",
     "glob": "^7.1.1",
     "istanbul": "^0.4.5",
     "rimraf": "^2.5.4",
-    "tslint": "^4.0.2",
+    "tslint": "^4.2.0",
     "tslint-microsoft-contrib": "^4.0.0",
     "typescript": "~2.1.4",
     "yargs": "^6.0.0"

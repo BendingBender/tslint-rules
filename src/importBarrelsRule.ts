@@ -59,7 +59,7 @@ class ImportBarrelsWalker extends RuleWalker {
     const moduleExpressionError = this.getModuleExpressionErrorMessage(moduleExpression);
 
     if (moduleExpressionError) {
-      this.addFailure(this.createFailure(moduleExpression.getStart(), moduleExpression.getWidth(), moduleExpressionError));
+      this.addFailureAtNode(moduleExpression, moduleExpressionError);
     }
 
     super.visitImportDeclaration(node);

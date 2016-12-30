@@ -1,3 +1,16 @@
+describe("this is ok", function() {
+  it("this is ok", function() {});
+  it("this is ok", wrap(function() {}));
+
+  describe("this is still ok", wrapAgain(function() {}));
+});
+
+// still ok
+(() => {})();
+
+// still ok
+someOtherCallWithLambda(() => {})
+
 describe("this", () => {
                  ~~~~~~~
   it("is an error", function() {
@@ -54,8 +67,6 @@ describe("this, too", function() {
 ~~~ [no-lambda-callback]
 });
 
-someOtherCallWithLambda(() => {})
-
 fdescribe("this, too", wrapCallback(() => {
                                     ~~~~~~~
 }));
@@ -72,9 +83,5 @@ describe("this, too", wrapCallback(function() {
   }));
 ~~~ [no-lambda-callback]
 }));
-
-(() => {})();
-
-
 
 [no-lambda-callback]: Don't use lambda expressions as callbacks to jasmine functions

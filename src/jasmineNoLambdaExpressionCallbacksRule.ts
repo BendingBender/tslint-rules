@@ -1,6 +1,6 @@
 import { IRuleMetadata, RuleFailure, Rules, RuleWalker, Utils } from 'tslint/lib';
-import { ArrowFunction, CallExpression, Expression, Identifier, SourceFile, SyntaxKind } from 'typescript';
-import includes = require('lodash/includes');
+import { ArrowFunction, CallExpression, Expression, SourceFile, SyntaxKind } from 'typescript';
+import { isJasmineDescribe, isJasmineIt, isJasmineSetupTeardown, isJasmineTest } from './utils/jasmineUtils';
 import find = require('lodash/find');
 
 export class Rule extends Rules.AbstractRule {
@@ -33,20 +33,6 @@ export class Rule extends Rules.AbstractRule {
   };
 
   public static FAILURE_STRING = "Don't use lambda expressions as callbacks to jasmine functions";
-  public static JASMINE_BDD_API = [
-    'describe',
-    'it',
-    'fdescribe',
-    'fit',
-    'xdescribe',
-    'xit',
-  ];
-  public static JASMINE_SETUP_TEARDOWN = [
-    'beforeEach',
-    'afterEach',
-    'beforeAll',
-    'afterAll',
-  ];
 
   public apply(sourceFile:SourceFile):RuleFailure[] {
     return this.applyWithWalker(new JasmineNoLambdaExpressionCallbacksWalker(sourceFile, this.getOptions()));
@@ -54,31 +40,37 @@ export class Rule extends Rules.AbstractRule {
 }
 
 class JasmineNoLambdaExpressionCallbacksWalker extends RuleWalker {
+  protected visitSourceFile(node:SourceFile) {
+    if (isJasmineTest(node)) {
+      super.visitSourceFile(node);
+    }
+  }
+
   protected visitCallExpression(node:CallExpression) {
     const invalidLambdaExpression = this.getInvalidLambdaExpression(node);
 
     if (invalidLambdaExpression) {
-      this.addFailure(this.createFailure(invalidLambdaExpression.getStart(), invalidLambdaExpression.getWidth(), Rule.FAILURE_STRING));
+      this.addFailureAtNode(invalidLambdaExpression, Rule.FAILURE_STRING);
     }
 
     super.visitCallExpression(node);
   }
 
-  private getInvalidLambdaExpression(node:CallExpression):ArrowFunction|null {
+  private getInvalidLambdaExpression(node:CallExpression):ArrowFunction|false {
     if (node.expression.kind !== SyntaxKind.Identifier) {
-      return null;
+      return false;
     }
 
-    const functionIdentifier = (<Identifier>node.expression).text;
+    const functionIdentifier = node.expression.getText();
     const functionArgs = node.arguments;
 
-    if (includes(Rule.JASMINE_BDD_API, functionIdentifier) && functionArgs.length >= 2) {
-      return this.getLambdaExpressionFromArg(functionArgs[1]);
-    } else if (includes(Rule.JASMINE_SETUP_TEARDOWN, functionIdentifier) && functionArgs.length >= 1) {
-      return this.getLambdaExpressionFromArg(functionArgs[0]);
+    if ((isJasmineDescribe(functionIdentifier) || isJasmineIt(functionIdentifier)) && functionArgs.length > 1) {
+      return this.getLambdaExpressionFromArg(functionArgs[1]) || false;
+    } else if (isJasmineSetupTeardown(functionIdentifier) && functionArgs.length > 0) {
+      return this.getLambdaExpressionFromArg(functionArgs[0]) || false;
     }
 
-    return null;
+    return false;
   }
 
   private getLambdaExpressionFromArg(apiArg:Expression):ArrowFunction|null {

@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 'use strict';
 
 const argv = require('yargs')
@@ -27,17 +28,17 @@ glob('src/tests/**/*.ts.lint', (error, files) => {
     throw error;
   }
 
-  files
-    .map(file => path.dirname(file))
-    .forEach(dir => {
-      const pathToBuildDir = path.resolve(dir, buildDir);
-      const pathToCoverageDir = path.resolve(dir, coverageDir);
+  const uniqueDirs = new Set(files.map(path.dirname));
 
-      child_process.execSync(getTestCommand(pathToBuildDir, pathToCoverageDir), {
-        cwd: dir,
-        stdio: 'inherit'
-      });
+  uniqueDirs.forEach(dir => {
+    const pathToBuildDir = path.resolve(dir, buildDir);
+    const pathToCoverageDir = path.resolve(dir, coverageDir);
+
+    child_process.execSync(getTestCommand(pathToBuildDir, pathToCoverageDir), {
+      cwd: dir,
+      stdio: 'inherit'
     });
+  });
 });
 
 function getTestCommand(buildDir, coverageDir) {
