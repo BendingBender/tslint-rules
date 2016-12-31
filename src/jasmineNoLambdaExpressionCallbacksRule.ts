@@ -1,4 +1,4 @@
-import { IRuleMetadata, RuleFailure, Rules, RuleWalker, Utils } from 'tslint/lib';
+import { Fix, IRuleMetadata, Replacement, RuleFailure, Rules, RuleWalker, Utils } from 'tslint/lib';
 import { ArrowFunction, CallExpression, Expression, SourceFile, SyntaxKind } from 'typescript';
 import { isJasmineDescribe, isJasmineIt, isJasmineSetupTeardown, isJasmineTest } from './utils/jasmineUtils';
 import find = require('lodash/find');
@@ -50,7 +50,7 @@ class JasmineNoLambdaExpressionCallbacksWalker extends RuleWalker {
     const invalidLambdaExpression = this.getInvalidLambdaExpression(node);
 
     if (invalidLambdaExpression) {
-      this.addFailureAtNode(invalidLambdaExpression, Rule.FAILURE_STRING);
+      this.addFailureAtNode(invalidLambdaExpression, Rule.FAILURE_STRING, this.getFix(invalidLambdaExpression));
     }
 
     super.visitCallExpression(node);
@@ -81,5 +81,22 @@ class JasmineNoLambdaExpressionCallbacksWalker extends RuleWalker {
     }
 
     return null;
+  }
+
+  private getFix(lambdaExpression:ArrowFunction):Fix {
+    const arrowToken = lambdaExpression.equalsGreaterThanToken;
+    const replacements = [
+      new Replacement(lambdaExpression.getStart(), 0, 'function'),
+      new Replacement(arrowToken.getStart(), lambdaExpression.body.getStart() - arrowToken.getStart(), '')
+    ];
+
+    if (lambdaExpression.body.kind !== SyntaxKind.Block) {
+      replacements.push(
+        new Replacement(lambdaExpression.body.getStart(), 0, '{ return '),
+        new Replacement(lambdaExpression.getStart() + lambdaExpression.getWidth(), 0, '; }')
+      );
+    }
+
+    return new Fix(Rule.metadata.ruleName, replacements);
   }
 }

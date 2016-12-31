@@ -20,10 +20,12 @@ describe("this", () => {
 });
 ~ [no-lambda-callback]
 
-fdescribe("this, too", () => {
-                       ~~~~~~~
-});
-~ [no-lambda-callback]
+fdescribe("this, too", () => doSomething());
+                       ~~~~~~~~~~~~~~~~~~~ [no-lambda-callback]
+fdescribe("this, too", () =>doSomething());
+                       ~~~~~~~~~~~~~~~~~~ [no-lambda-callback]
+fdescribe("this, too", ()=>doSomething());
+                       ~~~~~~~~~~~~~~~~~ [no-lambda-callback]
 
 xdescribe("this, too", () => {
                        ~~~~~~~

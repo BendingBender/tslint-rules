@@ -1,0 +1,4 @@
+(() => {
+  describe('some test in an IIFE', function() {});
+})();
+

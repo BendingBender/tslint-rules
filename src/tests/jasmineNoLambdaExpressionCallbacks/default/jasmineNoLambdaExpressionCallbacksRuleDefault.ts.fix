@@ -1,0 +1,59 @@
+describe("this is ok", function() {
+  it("this is ok", function() {});
+  it("this is ok", wrap(function() {}));
+
+  describe("this is still ok", wrapAgain(function() {}));
+});
+
+// still ok
+(() => {})();
+
+// still ok
+someOtherCallWithLambda(() => {})
+
+describe("this", function() {
+  it("is an error", function() {
+  });
+});
+
+fdescribe("this, too", function() { return doSomething(); });
+fdescribe("this, too", function() { return doSomething(); });
+fdescribe("this, too", function(){ return doSomething(); });
+
+xdescribe("this, too", function() {
+});
+
+describe("this, too", function() {
+  it("is an error", function() {
+  });
+
+  fit("is an error", function() {
+  });
+
+  xit("is an error", function() {
+  });
+
+  beforeEach(function() {
+  });
+
+  beforeAll(function() {
+  });
+
+  afterEach(function() {
+  });
+
+  afterAll(function() {
+  });
+});
+
+fdescribe("this, too", wrapCallback(function() {
+}));
+
+describe("this, too", wrapCallback(function() {
+  it("hi", wrapAgain(function() {
+  }));
+
+  afterEach(yetAnotherWrap(function() {
+  }));
+}));
+

@@ -1,8 +1,9 @@
 Change Log
 ===
 
-v2.0.1
+v2.1.0
 ---
+* [new-fixer] `jasmine-no-lambda-expression-callbacks`
 * [enhancement] Added preliminary checks for `jasmine-no-lambda-expression-callbacks` rule to skip walking file if there are no jasmine
 top-level statements.
 

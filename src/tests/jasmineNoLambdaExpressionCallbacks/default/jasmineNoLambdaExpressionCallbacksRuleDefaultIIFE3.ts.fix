@@ -1,0 +1,4 @@
+(function test() {
+  describe('some test in an other IIFE', function() {});
+}());
+
