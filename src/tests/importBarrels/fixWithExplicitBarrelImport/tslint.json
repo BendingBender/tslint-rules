@@ -1,0 +1,13 @@
+{
+  "rulesDirectory": [
+    "../../../../dist"
+  ],
+  "rules": {
+    "import-barrels": [
+      true,
+      {
+        "fixWithExplicitBarrelImport": "index.ts"
+      }
+    ]
+  }
+}

@@ -1,0 +1,2 @@
+import relativeFromNonBarrel from './dir-with-barrel/index.ts';
+import relativeFromNonBarrelWithIndexLikeName from './dir-with-barrel/index.ts';

@@ -1,11 +1,5 @@
 import { unwrapParentheses } from 'tslint';
-import {
-  Block,
-  CallExpression,
-  Expression,
-  FunctionExpression,
-  SyntaxKind
-} from 'typescript';
+import { Block, CallExpression, Expression, FunctionExpression, SyntaxKind } from 'typescript';
 
 export function getIIFEExpressionBody(expression:Expression):Block|null {
   if (expression.kind === SyntaxKind.CallExpression) {

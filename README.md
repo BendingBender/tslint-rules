@@ -59,6 +59,8 @@ An argument object may be optionally provided, with the following properties:
 
 * `noExplicitBarrels = false`: disallows usage of explicitly named barrels in import statements (`import foo from './foo/index'`)
 * `fileExtensions = ['ts', 'js']`: uses the provided file extensions for module and barrel file lookup
+* `fixWithExplicitBarrelImport`: uses the provided string to replace non-barrel imports in `--fix` mode
+  (i.e. when set to `'index'`, `import foo from './foo/some-module'` becomes `import foo from './foo/index'`)
 
 
 ## `jasmine-no-lambda-expression-callbacks`

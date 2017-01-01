@@ -34,6 +34,7 @@ glob('src/tests/**/*.ts.lint', (error, files) => {
     const pathToBuildDir = path.resolve(dir, buildDir);
     const pathToCoverageDir = path.resolve(dir, coverageDir);
 
+    console.log(`=> running tests from: ${dir}`);
     child_process.execSync(getTestCommand(pathToBuildDir, pathToCoverageDir), {
       cwd: dir,
       stdio: 'inherit'

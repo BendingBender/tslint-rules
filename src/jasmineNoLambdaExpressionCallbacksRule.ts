@@ -4,7 +4,7 @@ import { isJasmineDescribe, isJasmineIt, isJasmineSetupTeardown, isJasmineTest }
 import find = require('lodash/find');
 
 export class Rule extends Rules.AbstractRule {
-  public static metadata:IRuleMetadata = {
+  public static readonly metadata:IRuleMetadata = {
     ruleName: 'jasmine-no-lambda-expression-callbacks',
     description: Utils.dedent`
       Disallows usage of ES6-style lambda expressions as callbacks to Jasmine BDD functions.`,
@@ -32,7 +32,7 @@ export class Rule extends Rules.AbstractRule {
     typescriptOnly: false,
   };
 
-  public static FAILURE_STRING = "Don't use lambda expressions as callbacks to jasmine functions";
+  public static readonly FAILURE_STRING = "Don't use lambda expressions as callbacks to jasmine functions";
 
   public apply(sourceFile:SourceFile):RuleFailure[] {
     return this.applyWithWalker(new JasmineNoLambdaExpressionCallbacksWalker(sourceFile, this.getOptions()));

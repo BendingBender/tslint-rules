@@ -1,0 +1,4 @@
+import relativeFromNonBarrel from './dir-with-barrel';
+
+// following should be OK
+import relativeFromNonBarrelWithIndexName from './dir-with-barrel/some-module-index';

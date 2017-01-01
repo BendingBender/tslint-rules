@@ -1,0 +1,10 @@
+import relativeFromNonBarrel from './dir-with-barrel';
+import relativeFromNonBarrelWithIndexLikeName from './dir-with-barrel';
+
+// following should be OK
+import relativeFromBarrel from './dir-with-barrel';
+import relativeFromBarrelExplicit from './dir-with-barrel/index';
+import relativeFromDirWithoutBarrel from './dir-without-barrel/some-module';
+import relativeFromSameDirWithBarrel from './some-module';
+import relativeFromSameDirWithBarrelExplicit from './index';
+import absoluteFromLib from 'lib';

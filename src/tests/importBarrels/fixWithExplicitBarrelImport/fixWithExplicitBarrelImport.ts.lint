@@ -1,0 +1,4 @@
+import relativeFromNonBarrel from './dir-with-barrel/some-module';
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [Use barrel (index) files for imports if they are available for path: './dir-with-barrel/some-module']
+import relativeFromNonBarrelWithIndexLikeName from './dir-with-barrel/some-module-index';
+                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [Use barrel (index) files for imports if they are available for path: './dir-with-barrel/some-module-index']
