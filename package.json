@@ -42,7 +42,7 @@
     "glob": "^7.1.1",
     "istanbul": "^0.4.5",
     "rimraf": "^2.5.4",
-    "tslint": "^4.2.0",
+    "tslint": "^4.5.1",
     "tslint-microsoft-contrib": "^4.0.0",
     "typescript": "~2.1.4",
     "yargs": "^6.6.0"
