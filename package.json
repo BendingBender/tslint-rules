@@ -36,16 +36,16 @@
     "lodash": "^4.17.3"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.45",
-    "@types/node": "^6.0.55",
-    "coveralls": "^2.11.14",
+    "@types/lodash": "^4.14.54",
+    "@types/node": "^7.0.5",
+    "coveralls": "^2.11.16",
     "glob": "^7.1.1",
     "istanbul": "^0.4.5",
-    "rimraf": "^2.5.4",
-    "tslint": "^4.2.0",
+    "rimraf": "^2.6.1",
+    "tslint": "^4.5.1",
     "tslint-microsoft-contrib": "^4.0.0",
-    "typescript": "~2.1.4",
-    "yargs": "^6.6.0"
+    "typescript": "~2.2.1",
+    "yargs": "^7.0.1"
   },
   "peerDependencies": {
     "tslint": "^4.0.0"
