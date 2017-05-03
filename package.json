@@ -45,7 +45,7 @@
     "tslint": "^4.5.1",
     "tslint-microsoft-contrib": "^4.0.0",
     "typescript": "~2.2.1",
-    "yargs": "^7.0.1"
+    "yargs": "^8.0.1"
   },
   "peerDependencies": {
     "tslint": "^4.0.0"
