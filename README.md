@@ -4,6 +4,8 @@
 
 # tslint-rules
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/BendingBender/tslint-rules.svg)](https://greenkeeper.io/)
+
 A set of custom [TSLint](https://github.com/palantir/tslint) rules.
 
 
