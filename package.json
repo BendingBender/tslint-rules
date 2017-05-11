@@ -1,6 +1,6 @@
 {
   "name": "custom-tslint-rules",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "Custom rules for tslint",
   "main": "tslint.json",
   "scripts": {
@@ -36,19 +36,19 @@
     "lodash": "^4.17.3"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.54",
-    "@types/node": "^7.0.5",
-    "coveralls": "^2.11.16",
+    "@types/lodash": "^4.14.64",
+    "@types/node": "^7.0.18",
+    "coveralls": "^2.13.1",
     "glob": "^7.1.1",
     "istanbul": "^0.4.5",
     "rimraf": "^2.6.1",
-    "tslint": "^4.5.1",
-    "tslint-microsoft-contrib": "^4.0.0",
-    "typescript": "~2.2.1",
-    "yargs": "^7.0.1"
+    "tslint": "^5.2.0",
+    "tslint-microsoft-contrib": "^5.0.0",
+    "typescript": "^2.3.2",
+    "yargs": "^8.0.1"
   },
   "peerDependencies": {
-    "tslint": "^4.0.0"
+    "tslint": "^5.0.0"
   },
   "engines": {
     "node": ">=4"

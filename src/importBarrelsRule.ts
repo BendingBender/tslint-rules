@@ -1,8 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { Fix, IOptions, IRuleMetadata, Replacement, RuleFailure, Rules, RuleWalker, Utils } from 'tslint/lib';
-import { Expression, ImportDeclaration, SourceFile, StringLiteral, SyntaxKind } from 'typescript';
-import { CachedStat } from './utils/cachedStat';
+import {Fix, IOptions, IRuleMetadata, Replacement, RuleFailure, Rules, RuleWalker, Utils} from 'tslint/lib';
+import {Expression, ImportDeclaration, SourceFile, StringLiteral, SyntaxKind} from 'typescript';
+import {CachedStat} from './utils/cachedStat';
 
 export class Rule extends Rules.AbstractRule {
   public static readonly metadata:IRuleMetadata = {
@@ -12,11 +12,11 @@ export class Rule extends Rules.AbstractRule {
     rationale: Utils.dedent`
       Allows directories that contain multiple modules to be handled as a single module with a single public interface
       and opaque inner structure.
-      
+
       This rule works only for ES2015 module syntax \`import\` statements and checks only **relative** module paths.`,
     optionsDescription: Utils.dedent`
       An argument object may be optionally provided, with the following properties:
-      
+
       * \`noExplicitBarrels = false\`: disallows usage of explicitly named barrels in import statements (\`import foo from './foo/index'\`)
       * \`fileExtensions = ['ts', 'js']\`: uses the provided file extensions for module and barrel file lookup
       * \`fixWithExplicitBarrelImport\`: uses the provided string to replace non-barrel imports in \`--fix\` mode
@@ -111,7 +111,7 @@ class ImportBarrelsWalker extends RuleWalker {
       return CheckResult.OK;
     }
 
-    const sourceFileRelative = this.getSourceFile().path;
+    const sourceFileRelative = this.getSourceFile().fileName;
     const sourceFileDirAbsolute = path.resolve(path.dirname(sourceFileRelative));
     const moduleAbsolute = path.normalize(path.resolve(sourceFileDirAbsolute, modulePathText));
     const moduleDirAbsolute = path.dirname(moduleAbsolute);
@@ -141,10 +141,10 @@ class ImportBarrelsWalker extends RuleWalker {
     return dirHasBarrelFile ? CheckResult.NonBarrelImport : CheckResult.OK;
   }
 
-  private getModuleStats(modulePath:string):fs.Stats|null {
+  private getModuleStats(modulePath:string):fs.Stats | null {
     const modulePathCandidates = [modulePath, ...this.ruleOptions.fileExtensions.map(suffix => `${modulePath}.${suffix}`)];
 
-    let stats:fs.Stats|null = null;
+    let stats:fs.Stats | null = null;
     modulePathCandidates.some(modulePathCandidate => {
       stats = this.cachedStat.statSync(modulePathCandidate);
       return stats !== null;
@@ -160,8 +160,7 @@ class ImportBarrelsWalker extends RuleWalker {
       replacement += `/${this.ruleOptions.fixWithExplicitBarrelImport}`;
     }
 
-    return new Fix(Rule.metadata.ruleName, [
-      // account for quotes
-      new Replacement(moduleSpecifier.getStart() + 1, moduleSpecifier.getWidth() - `''`.length, replacement)]);
+    // account for quotes
+    return new Replacement(moduleSpecifier.getStart() + 1, moduleSpecifier.getWidth() - `''`.length, replacement);
   }
 }
