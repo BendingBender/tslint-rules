@@ -113,4 +113,3 @@ To run the tests execute `npm test`. `npm run cover` will run the tests along wi
 [dev-deps-image]: https://img.shields.io/david/dev/BendingBender/tslint-rules.svg?style=flat-square
 [dev-deps-url]: https://david-dm.org/BendingBender/tslint-rules?type=dev
 [npm-image]: https://nodei.co/npm/custom-tslint-rules.png?downloads=true
-[npm-url]: https://npmjs.org/package/custom-tslint-rules
