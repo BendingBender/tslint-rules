@@ -1,6 +1,6 @@
-import { Fix, IRuleMetadata, Replacement, RuleFailure, Rules, RuleWalker, Utils } from 'tslint/lib';
-import { ArrowFunction, CallExpression, Expression, SourceFile, SyntaxKind } from 'typescript';
-import { isJasmineDescribe, isJasmineIt, isJasmineSetupTeardown, isJasmineTest } from './utils/jasmineUtils';
+import {Fix, IRuleMetadata, Replacement, RuleFailure, Rules, RuleWalker, Utils} from 'tslint/lib';
+import {ArrowFunction, CallExpression, Expression, SourceFile, SyntaxKind} from 'typescript';
+import {isJasmineDescribe, isJasmineIt, isJasmineSetupTeardown, isJasmineTest} from './utils/jasmineUtils';
 import find = require('lodash/find');
 
 export class Rule extends Rules.AbstractRule {
@@ -20,7 +20,7 @@ export class Rule extends Rules.AbstractRule {
       beforeEach(async(() => {
         ...
       }));
-      
+
       it('something', inject([Service], (service) => {
         ...
       }))
@@ -56,7 +56,7 @@ class JasmineNoLambdaExpressionCallbacksWalker extends RuleWalker {
     super.visitCallExpression(node);
   }
 
-  private getInvalidLambdaExpression(node:CallExpression):ArrowFunction|false {
+  private getInvalidLambdaExpression(node:CallExpression):ArrowFunction | false {
     if (node.expression.kind !== SyntaxKind.Identifier) {
       return false;
     }
@@ -73,7 +73,7 @@ class JasmineNoLambdaExpressionCallbacksWalker extends RuleWalker {
     return false;
   }
 
-  private getLambdaExpressionFromArg(apiArg:Expression):ArrowFunction|null {
+  private getLambdaExpressionFromArg(apiArg:Expression):ArrowFunction | null {
     if (apiArg.kind === SyntaxKind.ArrowFunction) {
       return <ArrowFunction>apiArg;
     } else if (apiArg.kind === SyntaxKind.CallExpression) {
@@ -97,6 +97,6 @@ class JasmineNoLambdaExpressionCallbacksWalker extends RuleWalker {
       );
     }
 
-    return new Fix(Rule.metadata.ruleName, replacements);
+    return replacements;
   }
 }

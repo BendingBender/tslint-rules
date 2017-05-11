@@ -1,6 +1,11 @@
 Change Log
 ===
 
+v3.0.0
+---
+* **BREAKING CHANGES**
+  * [enhancement] Upgraded to tslint@5
+
 v2.1.0
 ---
 * [new-fixer] `jasmine-no-lambda-expression-callbacks`
