@@ -35,8 +35,8 @@ Now configure some of the new rules.
 # Available Rules
 
 ## `import-barrels`
-
-Enforces usage of barrels (`index.ts`) when importing from a directory that has a barrel file.
+<details>
+  <summary>Enforces usage of barrels (`index.ts`) when importing from a directory that has a barrel file.</summary>
 
 #### Rationale:
 
@@ -62,10 +62,12 @@ An argument object may be optionally provided, with the following properties:
 * `fixWithExplicitBarrelImport`: uses the provided string to replace non-barrel imports in `--fix` mode
   (i.e. when set to `'index'`, `import foo from './foo/some-module'` becomes `import foo from './foo/index'`)
 
+</details>
 
 ## `jasmine-no-lambda-expression-callbacks`
 
-Disallows usage of ES6-style lambda expressions as callbacks to Jasmine BDD functions.  
+<details>
+  <summary>Disallows usage of ES6-style lambda expressions as callbacks to Jasmine BDD functions.</summary>
 
 #### Rationale:
 
@@ -95,6 +97,7 @@ it('something', inject([Service], (service) => {
 #### Options:
 
 Not configurable.
+</details>
 
 # Contributions and Development
 
