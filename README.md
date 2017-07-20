@@ -14,14 +14,14 @@ Install from npm to your devDependencies:
 npm install --save-dev custom-tslint-rules
 ```
 
-Configure tslint to use the custom-tslint-rules folder:
+Configure tslint to extend the custom-tslint-rules configuration:
 
-Add the following path to the `rulesDirectory` setting in your `tslint.json` file:
+Add the following to the `extends` setting in your `tslint.json` file:
 
 ```json
 {
-   "rulesDirectory": [
-     "node_modules/custom-tslint-rules/dist"
+   "extends": [
+     "custom-tslint-rules"
    ],
    "rules": {
      ...
