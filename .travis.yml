@@ -4,6 +4,7 @@ node_js:
   - "6"
   - "5"
   - "4"
+  - "10"
 before_install:
   - 'npm install -g npm@3'
 script:
